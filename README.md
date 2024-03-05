@@ -35,7 +35,9 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 
 - [ ] Allow bookmarking
 
-- [ ] Create idle animations in React.
+- [ ] Create animations.
+
+- [ ] Create user accounts.
 
 ## Installation and Usage
 
