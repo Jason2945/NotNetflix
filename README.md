@@ -4,9 +4,9 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 
 ## Design Steps on this project
 
-1. - [ ] Complete Figma Wireframe to have idea of what should be on the designs.
-2. - [ ] Create GitHub Readme
-3. - [ ] Start Code in VSC
+1. - [x] Complete Figma Wireframe to have idea of what should be on the designs.
+2. - [x] Create GitHub Readme
+3. - [x] Start Code in VSC
 4. - [ ] Finish MVP
 5. - [ ] Finish PMVP
 6. - [ ] Reflect on project
