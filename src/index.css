@@ -1,0 +1,86 @@
+root, html, body{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/**********************************************************************************/
+/* This is the css for the login page */
+.Login_Page {
+    background-image: url("./assets/imgs/movie_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+}
+
+.Login_Box {
+    background-color: black;
+    width: 20vw;
+    height: 50vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo{
+    width: 7vw;
+    height: auto;
+    user-select: none;
+}
+
+.Username_Box {
+    display: flex;
+    padding-bottom: 5%;
+    width: 20vw;
+    justify-content: center;
+    padding-top: 15%;
+}
+
+.Username_Box label {
+    padding-right: 5%;
+    user-select: none;
+}
+
+.Username_Box input {
+    padding-left: 2%;
+}
+
+.Password_Box {
+    display: flex;
+    width: 20vw;
+    justify-content: center;
+}
+
+.Password_Box label {
+    padding-right: 5%;
+    user-select: none;
+}
+
+.Password_Box input {
+    padding-left: 2%;
+}
+
+.Entry_Buttons {
+    display: flex;
+    padding-top: 10%;
+    width: 80%;
+    height: 10%;
+    justify-content: space-around;
+    user-select: none;
+}
+
+.Entry_Buttons :hover{
+    background-color: red;
+}
+
+.Entry_Buttons button{
+    width: 40%;
+    height: 100%;
+}
