@@ -14,7 +14,6 @@ export default function Landing(){
                 headers: {
                     accept: 'application/json',
                     Authorization: `Bearer ${apiKey}`
-                    //Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMmY2ZTYwNWE4YzJjODM4MzA0OTE0Njk4NjJjY2RhYSIsInN1YiI6IjY1ZTkxYmZiM2Q3NDU0MDE3ZGI4YjMwYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z5DgnlIYEg_SgVRV1zxYWcMDH4UD1IiqhDYPKVfaobU'
                 }
             };
             const PopularMovieResponse = await fetch('https://api.themoviedb.org/3/movie/popular', options);
