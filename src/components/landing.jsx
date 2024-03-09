@@ -3,85 +3,98 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Landing(){
-
-    const apiKey = import.meta.env.VITE_API_KEY;
+    
     // Use state to store movies and tv shows
-
     const [popularMovies, setPopularMovies] = useState([]);
-    const [popularTV, setPopularTV] = useState([]);
     const [ratedMovies, setRatedMovies] = useState([]);
+    const [trendingMovies, setTrendingMovies] = useState([]);
+    const [horrorMovies, setHorrorMovies] = useState([]);
 
+    // Allows the naviagtion to the trailer page
     let navigate = useNavigate();
     const to_trailer = (data, type) => {
-        console.log(data)
-        let path = '/trailer';
+        let path = `/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
 
-
-    // Allow user to scroll left and right to see all movie list
-    // const scrolling = (id, e) => {
-    //     const container = document.getElementById(id);
-    //     if (e.deltaY > 0) {
-    //         container.scrollLeft += 100;
-    //     } else {
-    //         container.scrollLeft -= 100;
-    //     }
-    // }
-
-    // Function to get data from TMDB
-
+    {/* Fetch shows from the get_data function */}
     useEffect(() => {
         const fetchShows = async() => {
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer ${apiKey}`
-                }
-            };
-            {/* Stores the shows into their own arrays */}
-
-            const PopularMovieResponse = await fetch('https://api.themoviedb.org/3/movie/popular', options);
-            const PopularMovieData = await PopularMovieResponse.json();
-            setPopularMovies(PopularMovieData.results)
-
-            const PopularTVResponse = await fetch('https://api.themoviedb.org/3/tv/popular', options);
-            const PopularTVData = await PopularTVResponse.json();
-            setPopularTV(PopularTVData.results)
-
-            const RatedMovieResponse = await fetch('https://api.themoviedb.org/3/movie/top_rated', options);
-            const RatedMovieData = await RatedMovieResponse.json();
-            setRatedMovies(RatedMovieData.results)
-            
+            get_data({url: 'https://api.themoviedb.org/3/movie/popular', set_movie: setPopularMovies})
+            get_data({url: 'https://api.themoviedb.org/3/movie/top_rated', set_movie: setRatedMovies})
+            get_data({url: 'https://api.themoviedb.org/3/trending/movie/week', set_movie: setTrendingMovies})
+            get_data({url: 'https://api.themoviedb.org/3/discover/movie?&language=en-US&with_genres=27', set_movie: setHorrorMovies})
         }
         fetchShows()
     }, [])
 
-    return(
-        <>
-            <div className='shows_container'>
-                <h3> Popular Movies</h3>
-                <div className='popular_movies_container' id='popular_movie' onWheel={(e) => {scrolling('popular_movie', e)}}>
-                    {popularMovies.map((movie) => (
-                        <img onClick={() => to_trailer(movie.id, 'movie')} key={movie.id} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path}/>              
-                    ))}
-                </div>
-                
-                <h3> Popular TV Shows</h3>
-                <div className='popular_tv_container' id='popular_tv' onWheel={(e) => {scrolling('popular_tv', e)}}>
-                    {popularTV.map((tv, index) => (
-                        <img onClick={() => to_trailer(tv.id, 'tv')} key={index} src={'https://image.tmdb.org/t/p/w500' + tv.poster_path}/>
-                    ))}
-                </div>
+    const allContainers = ['popular_movies', 'rated_movies', 'trending_movies', 'horror_movies'];
+    scrolling({allContainers});
 
-                <h3> Top Rated Movies</h3>
-                <div className='rated_movies_container' id='rated_movies' onWheel={(e) => {scrolling('rated_movies', e)}}>
-                    {ratedMovies.map((movie, index) => (
-                        <img onClick={() => to_trailer(movie.id, 'movie')} key={index} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path}/>
-                    ))}
-                </div>
+    return(
+            <div className='shows_container'>
+                <Movie_Card title="Popular Movies" movies={popularMovies} containerId='popular_movies' onClickHandler={to_trailer} />
+                <Movie_Card title="Top Rated Movies" movies={ratedMovies} containerId='rated_movies' onClickHandler={to_trailer} />
+                <Movie_Card title="Trending Movies" movies={trendingMovies} containerId='trending_movies' onClickHandler={to_trailer} />
+                <Movie_Card title="Horror Movies" movies={horrorMovies} containerId='horror_movies' onClickHandler={to_trailer} />
+                <div className='footer'></div>
             </div>
-        </>
     )
+}
+
+const Movie_Card = ({ title, movies, containerId, onClickHandler}) => {
+    return (
+        <>
+            <h3>{title}</h3>
+            <div className='movie_container' id={containerId}>
+                {movies.map((movie, index) => (
+                    <img onClick={() => onClickHandler(movie.id, 'movie')} key={index} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} />
+                ))}
+            </div>
+        </> 
+    )
+}
+
+const get_data = async ({ url, set_movie}) => {
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${apiKey}`,
+        }
+    };
+    const Response = await fetch(url, options);
+    const Data = await Response.json();
+    set_movie(Data.results);
+}
+
+const scrolling = ({allContainers}) => {
+    useEffect(() => {
+        allContainers.forEach(containerId => {
+            const container = document.querySelector(`#${containerId}`);
+            let scrollingRight = true;
+            let interval;
+    
+            const startScrolling = () => {
+                interval = setInterval(() => {
+                    if (scrollingRight){
+                        container.scrollLeft += 5;
+                        if (container.scrollLeft >= container.scrollWidth - container.clientWidth){
+                            scrollingRight = false;
+                        }
+                    }else {
+                        container.scrollLeft -= 5;
+                        if (container.scrollLeft <= 0) {
+                            scrollingRight = true;
+                        }
+                    }
+                }, 100)
+            };
+            container.addEventListener('mouseenter', () => clearInterval(interval));
+            container.addEventListener('mouseleave', startScrolling);
+
+            startScrolling();
+        })
+    }, [])
 }

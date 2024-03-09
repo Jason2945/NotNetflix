@@ -18,7 +18,7 @@ export default function Login(){
             <div className="info_box">
 
                 {/* Display Not Netflix Logo */}
-                <img className="logo" src= {logo} alt="Not-Netflix Logo" />
+                <img className="login_logo" src= {logo} alt="Not-Netflix Logo" />
                 {/* Create button to enter */}
                 <button id="explore_button" onClick={logging_in}>EXPLORE</button>
 
