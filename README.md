@@ -7,7 +7,7 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 1. - [x] Complete Figma Wireframe to have idea of what should be on the designs.
 2. - [x] Create GitHub Readme
 3. - [x] Start Code in VSC
-4. - [ ] Finish MVP
+4. - [x] Finish MVP
 5. - [ ] Finish PMVP
 6. - [ ] Reflect on project
 7. - [ ] Improvements for future
@@ -19,12 +19,12 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 
 ## MVP
 
-- [ ] Create a log-in page
-- [ ] Create a profile selection page
-- [ ] Create a landing page
-- [ ] Implement API usage toward each video
-- [ ] Add navigation bar.
-- [ ] Add in animations
+- [x] Create a log-in page
+- [x] Create a profile selection page
+- [x] Create a landing page
+- [x] Implement API usage toward each video
+- [x] Add navigation bar.
+- [x] Add in animations
 
 ## PMVP
 

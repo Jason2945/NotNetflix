@@ -9,16 +9,17 @@ import Navbar from './components/navbar';
 export default function App(){
 
   const location = useLocation();
-  const haveNavBar = location.pathname === '/landing' || location.pathname.startsWith('/trailer');
+  const haveNavBar = location.pathname === '/notnetflix/landing' || location.pathname.startsWith('/notnetflix/trailer');
 
   return (
     <>
+      {/* Make sure only the landing page and the trailer page */}
       {haveNavBar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/trailer/:id" element={<Trailer />} />
+        <Route path="/notnetflix" element={<Login />} />
+        <Route path="/notnetflix/profile" element={<Profile />} />
+        <Route path="/notnetflix/landing" element={<Landing />} />
+        <Route path="/notnetflix/trailer/:id" element={<Trailer />} />
       </Routes>
     </>
   )

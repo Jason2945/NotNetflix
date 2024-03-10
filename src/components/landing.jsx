@@ -10,10 +10,10 @@ export default function Landing(){
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [horrorMovies, setHorrorMovies] = useState([]);
 
-    // Allows the naviagtion to the trailer page
+    // Allows the navigation to the trailer page
     let navigate = useNavigate();
     const to_trailer = (data, type) => {
-        let path = `/trailer/${encodeURIComponent(data)}`;
+        let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
 

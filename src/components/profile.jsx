@@ -6,7 +6,7 @@ export default function Profile(){
 
 let navigate = useNavigate();
 const to_landing_page = () => {
-    let path = '/landing';
+    let path = '/notnetflix/landing';
     navigate(path)
 }
 

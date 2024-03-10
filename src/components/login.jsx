@@ -5,7 +5,7 @@ export default function Login(){
 
     let navigate = useNavigate();
     const logging_in = () => {
-        let path = '/profile';
+        let path = '/notnetflix/profile';
         navigate(path)
     }
 
