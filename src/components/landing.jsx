@@ -2,13 +2,21 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const apiKey = import.meta.env.VITE_API_KEY;
+const options = {
+     method: 'GET',
+    headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+    }
+};
+
 export default function Landing(){
     
     // Use state to store movies and tv shows
     const [popularMovies, setPopularMovies] = useState([]);
     const [ratedMovies, setRatedMovies] = useState([]);
     const [trendingMovies, setTrendingMovies] = useState([]);
-    const [horrorMovies, setHorrorMovies] = useState([]);
 
     // Allows the navigation to the trailer page
     let navigate = useNavigate();
@@ -23,12 +31,11 @@ export default function Landing(){
             get_data({url: 'https://api.themoviedb.org/3/movie/popular', set_movie: setPopularMovies})
             get_data({url: 'https://api.themoviedb.org/3/movie/top_rated', set_movie: setRatedMovies})
             get_data({url: 'https://api.themoviedb.org/3/trending/movie/week', set_movie: setTrendingMovies})
-            get_data({url: 'https://api.themoviedb.org/3/discover/movie?&language=en-US&with_genres=27', set_movie: setHorrorMovies})
         }
         fetchShows()
     }, [])
 
-    const allContainers = ['popular_movies', 'rated_movies', 'trending_movies', 'horror_movies'];
+    const allContainers = ['popular_movies', 'rated_movies', 'trending_movies'];
     scrolling({allContainers});
 
     return(
@@ -36,7 +43,6 @@ export default function Landing(){
                 <Movie_Card title="Popular Movies" movies={popularMovies} containerId='popular_movies' onClickHandler={to_trailer} />
                 <Movie_Card title="Top Rated Movies" movies={ratedMovies} containerId='rated_movies' onClickHandler={to_trailer} />
                 <Movie_Card title="Trending Movies" movies={trendingMovies} containerId='trending_movies' onClickHandler={to_trailer} />
-                <Movie_Card title="Horror Movies" movies={horrorMovies} containerId='horror_movies' onClickHandler={to_trailer} />
                 <div className='footer'></div>
             </div>
     )
@@ -55,20 +61,14 @@ const Movie_Card = ({ title, movies, containerId, onClickHandler}) => {
     )
 }
 
+// This function is to get the info on the movies with the url and the movie genre
 const get_data = async ({ url, set_movie}) => {
-    const apiKey = import.meta.env.VITE_API_KEY;
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${apiKey}`,
-        }
-    };
     const Response = await fetch(url, options);
     const Data = await Response.json();
     set_movie(Data.results);
 }
 
+// This function takes in all the genre containers and allow it to scroll through all 20 results and stop when hovered
 const scrolling = ({allContainers}) => {
     useEffect(() => {
         allContainers.forEach(containerId => {

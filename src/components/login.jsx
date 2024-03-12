@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login(){
 
     let navigate = useNavigate();
+    // Function to goto the profile page after user clicks the button
     const logging_in = () => {
         let path = '/notnetflix/profile';
         navigate(path)

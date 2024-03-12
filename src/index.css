@@ -1,3 +1,4 @@
+/* Allow the pages to fill the whole site, allow scrolling on the y */
 root, html, body{
     margin: 0;
     padding: 0;
@@ -6,6 +7,7 @@ root, html, body{
     overflow-y: scroll;
 }
 
+/* Hides the scroll bar, but still allow it to function */
 body::-webkit-scrollbar {
     display: none; /* WebKit (Safari, Chrome, etc.) */
     width: 0; /* Firefox */
@@ -111,9 +113,11 @@ body::-webkit-scrollbar {
 /**********************************************************************************/
 /* Profile page css */
 
+/* This allows the setup of the page before the rendering and allows animation after rendering */
+/* Mainly used to set background to .5 opacity nad z-index of -1 */
 .profile_page::before{
     content: '';
-    display: block;
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
@@ -147,6 +151,7 @@ body::-webkit-scrollbar {
     transition: transform 1s ease;
 }
 
+/* Add animations to imgs when hovered */
 .profile_box img:hover{
     transform: scale(1.3);
     transition: transform 1s ease;
@@ -158,7 +163,7 @@ body::-webkit-scrollbar {
     position: fixed;
     z-index: 1;
     height: 7vh;
-    width: 100%;
+    width: 100vw;
     align-items: center;
     background-color: black;
     justify-content: space-between;
@@ -179,6 +184,7 @@ body::-webkit-scrollbar {
 .NavBarLeft {
     display: flex;
     height: 100%;
+    width: 40vw;
     align-items: center;
 }
 
@@ -187,6 +193,24 @@ body::-webkit-scrollbar {
     padding-left: 2em;
     padding-right: 2rem;
 } 
+
+.NavLinks {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 20vw;
+}
+
+.NavLinks select{
+    text-indent: 1px;
+    text-overflow: '';
+    width: 7vw;
+    background: black;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+}
 
 .NavBarRight {
     padding-right: 10vw;
@@ -286,4 +310,43 @@ body::-webkit-scrollbar {
 .Movie_Card img{
     max-width: auto;
     max-height: 50%;
+}
+
+/**********************************************************************************/
+/* movie page css */
+
+.movies_container{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    align-items: center;
+}
+
+.movies_container h1{
+    color: red;
+    background-color: black;
+    padding-top: 10vh;
+    font-size: 5rem;
+    user-select: none;
+}
+
+.movies_by_genres_container{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+}
+
+.movie_item {
+    width: 15%;
+    margin: 5vh;
+}
+
+.movies_by_genres{
+    width: 75%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.movies_by_genres:hover{
+    transform: scale(1.3);
 }
