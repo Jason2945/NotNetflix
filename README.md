@@ -9,8 +9,8 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 3. - [x] Start Code in VSC
 4. - [x] Finish MVP
 5. - [ ] Finish PMVP
-6. - [ ] Reflect on project
-7. - [ ] Improvements for future
+6. - [X] Reflect on project
+7. - [X] Improvements for future
 
 ## Technologies Used
 
@@ -29,7 +29,7 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 ## PMVP
 
 - [ ] Allow bookmarking
-- [ ] Create animations.
+- [X] Create animations.
 - [ ] Create user accounts.
 
 ## Installation and Usage
@@ -40,3 +40,7 @@ This is a project made in Nebula Academy Bootcamp called Not Netflix. The idea i
 
 ## Figma Link
 [Figma Link of NotNetflix Overview](https://www.figma.com/file/hfXjg1V2v1UczEHQdGLjyn/Not-Netflix?type=design&node-id=0%3A1&mode=design&t=KjW8fAhzjMq0bqUR-1)
+
+## Thoughts and Improvements
+
+I believe this is my least successful project. I struggled a lot with placements and think there are a lot of improvements I can do. One big improvements is better layout and adding in TV shows as of right now it is all Movies. I would also like to allow bookmarking and make use of user accounts. Another feature is to allow guest access vs user access with username and password. This way guests can see what I watched and liked as well as see what I'm currently watching or seeing or expecting to see.
