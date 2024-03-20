@@ -26,24 +26,24 @@ export default function Navbar(){
     let navigate = useNavigate();
     // Allows the navigation to the trailer page
     const toTrailer = (data, type) => {
-        let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
+        let path = `/NotNetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
         setQuery('');
     }
 
     const loggingOut = () => {
-        let path = '/notnetflix';
+        let path = '/NotNetflix';
         navigate(path);
     }
 
     const changeProfile = () => {
-        let path = '/notnetflix/profile';
+        let path = '/NotNetflix/profile';
         navigate(path);
     }
 
     // Allows the navigation to the movies genre page
     const toGenres = (data, type, category) => {
-        let path = `/notnetflix/movie_genre/${encodeURIComponent(category)}`;
+        let path = `/NotNetflix/movie_genre/${encodeURIComponent(category)}`;
         navigate(path,{state:{id:data,type:type,category:category}});
     }
 

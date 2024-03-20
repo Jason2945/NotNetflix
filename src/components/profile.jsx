@@ -11,7 +11,7 @@ export default function Profile(){
 
     let navigate = useNavigate();
     const To_Landing_Page = (image) => {
-        let path = '/notnetflix/landing';
+        let path = '/NotNetflix/landing';
         setImageData(image)
         navigate(path)
     }

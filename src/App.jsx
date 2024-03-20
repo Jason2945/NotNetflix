@@ -12,11 +12,11 @@ export default function App(){
     <>
       <Router>
         <Routes>
-          <Route path="/notnetflix" element={<Login />} />
-          <Route path="/notnetflix/profile" element={<Profile />} />
-          <Route path="/notnetflix/landing" element={<Landing />} />
-          <Route path="/notnetflix/trailer/:id" element={<Trailer />} />
-          <Route path="/notnetflix/movie_genre/:id" element={<MovieByGenres />}/>
+          <Route path="/NotNetflix" element={<Login />} />
+          <Route path="/NotNetflix/profile" element={<Profile />} />
+          <Route path="/NotNetflix/landing" element={<Landing />} />
+          <Route path="/NotNetflix/trailer/:id" element={<Trailer />} />
+          <Route path="/NotNetflix/movie_genre/:id" element={<MovieByGenres />}/>
         </Routes>
       </Router>
     </>

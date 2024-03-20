@@ -8,7 +8,7 @@ export default function Login(){
 
     // Allows the user to move to the profile page once EXPLORE is clicked
     const LoggingIn = () => {
-        let path = '/notnetflix/profile';
+        let path = '/NotNetflix/profile';
         navigate(path);
     }
 

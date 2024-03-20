@@ -20,7 +20,7 @@ export default function MovieByGenres(){
     let navigate = useNavigate();
 
     const toTrailer = (data, type) => {
-        let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
+        let path = `/NotNetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
     const [fetchGenreMovies, setFetchGenresMovies] = useState([]);
