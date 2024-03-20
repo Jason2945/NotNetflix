@@ -1,6 +1,7 @@
 import { useState, useEffect, React } from "react";
 import { useLocation } from "react-router-dom";
 import ReactPlayer from 'react-player';
+import Navbar from "./navbar";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const options = {
@@ -35,7 +36,7 @@ export default function Trailer(){
             setVideoLinks(LinkData.results)
         }
         fetchData()
-    }, [])
+    }, [location.state])
 
     useEffect(() => {
         const findTrailer = videoLinks.filter(link => {
@@ -47,23 +48,28 @@ export default function Trailer(){
     }, [videoLinks])
 
     return (
-        <div className="trailer_page">
-            <MovieCard movieInfo={showData}/>
-            {trailerLink.length > 0 && trailerLink[0].key && (
-                <ReactPlayer 
-                    url={`https://www.youtube.com/watch?v=${trailerLink[0].key}`}
-                    width='100%'
-                    height='auto'
-                />
-            )}
+        <div className="Trailer">
+            <Navbar/>
+            <div className="TrailerContent">
+                <MovieInfo movieInfo={showData}/>
+                {trailerLink.length > 0 && trailerLink[0].key && (
+                    <ReactPlayer 
+                        className='VideoPlayer'
+                        controls={true}
+                        url={`https://www.youtube.com/watch?v=${trailerLink[0].key}`}
+                        width='100%'
+                        height='90%'
+                    />
+                )}
+            </div>
         </div>
     )
 }
 
 //  This movie card displays the movie name, image, overview, release date, and the genres
-const MovieCard = ({movieInfo}) => {
+const MovieInfo = ({movieInfo}) => {
     return (
-        <div className="Movie_Card">
+        <div className="MovieCard">
             <h2>{movieInfo.title}</h2>
             <img src={'https://image.tmdb.org/t/p/w500' + movieInfo.poster_path} />
             <p id="overview">{movieInfo.overview}</p>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './navbar';
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const options = {
@@ -13,47 +13,50 @@ const options = {
 
 export default function Landing(){
     
-    // Use state to store movies and tv shows
+    // useState to store different movie categories
     const [popularMovies, setPopularMovies] = useState([]);
     const [ratedMovies, setRatedMovies] = useState([]);
     const [trendingMovies, setTrendingMovies] = useState([]);
 
     // Allows the navigation to the trailer page
     let navigate = useNavigate();
-    const to_trailer = (data, type) => {
+    const toTrailer = (data, type) => {
         let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
 
-    {/* Fetch shows from the get_data function */}
+    {/* Fetch shows from the getData function */}
     useEffect(() => {
         const fetchShows = async() => {
-            get_data({url: 'https://api.themoviedb.org/3/movie/popular', set_movie: setPopularMovies})
-            get_data({url: 'https://api.themoviedb.org/3/movie/top_rated', set_movie: setRatedMovies})
-            get_data({url: 'https://api.themoviedb.org/3/trending/movie/week', set_movie: setTrendingMovies})
+            getData({url: 'https://api.themoviedb.org/3/movie/popular', setMovie: setPopularMovies})
+            getData({url: 'https://api.themoviedb.org/3/movie/top_rated', setMovie: setRatedMovies})
+            getData({url: 'https://api.themoviedb.org/3/trending/movie/week', setMovie: setTrendingMovies})
         }
         fetchShows()
     }, [])
 
-    const allContainers = ['popular_movies', 'rated_movies', 'trending_movies'];
+    const allContainers = ['popularMovies', 'ratedMovies', 'trendingMovies'];
     scrolling({allContainers});
 
+    // This displays the items on the landing page
     return(
-            <div className='shows_container'>
-                <Movie_Card title="Popular Movies" movies={popularMovies} containerId='popular_movies' onClickHandler={to_trailer} />
-                <Movie_Card title="Top Rated Movies" movies={ratedMovies} containerId='rated_movies' onClickHandler={to_trailer} />
-                <Movie_Card title="Trending Movies" movies={trendingMovies} containerId='trending_movies' onClickHandler={to_trailer} />
-                <div className='footer'></div>
+            <div className='Shows'>
+                <Navbar/>
+                <div className="MovieList">
+                    <MovieImage Title="Popular Movies" Movies={popularMovies} containerId='popularMovies' onClickHandler={toTrailer} />
+                    <MovieImage Title="Top Rated Movies" Movies={ratedMovies} containerId='ratedMovies' onClickHandler={toTrailer} />
+                    <MovieImage Title="Trending Movies" Movies={trendingMovies} containerId='trendingMovies' onClickHandler={toTrailer} />
+                </div>
             </div>
     )
 }
 
-const Movie_Card = ({ title, movies, containerId, onClickHandler}) => {
+const MovieImage = ({ Title, Movies, containerId, onClickHandler}) => {
     return (
         <>
-            <h3>{title}</h3>
-            <div className='movie_container' id={containerId}>
-                {movies.map((movie, index) => (
+            <h3>{Title}</h3>
+            <div className='MovieContainer' id={containerId}>
+                {Movies.map((movie, index) => (
                     <img onClick={() => onClickHandler(movie.id, 'movie')} key={index} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} />
                 ))}
             </div>
@@ -62,10 +65,10 @@ const Movie_Card = ({ title, movies, containerId, onClickHandler}) => {
 }
 
 // This function is to get the info on the movies with the url and the movie genre
-const get_data = async ({ url, set_movie}) => {
+const getData = async ({ url, setMovie}) => {
     const Response = await fetch(url, options);
     const Data = await Response.json();
-    set_movie(Data.results);
+    setMovie(Data.results);
 }
 
 // This function takes in all the genre containers and allow it to scroll through all 20 results and stop when hovered

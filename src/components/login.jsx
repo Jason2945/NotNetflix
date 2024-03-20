@@ -1,28 +1,32 @@
-import logo from "../assets/imgs/NN_Logo.png"
+import NN_Logo from "../assets/imgs/NN_Logo.png";
 import { useNavigate } from 'react-router-dom';
+import Background from "../assets/imgs/Background.jpg";
 
 export default function Login(){
 
     let navigate = useNavigate();
-    // Function to goto the profile page after user clicks the button
-    const logging_in = () => {
+
+    // Allows the user to move to the profile page once EXPLORE is clicked
+    const LoggingIn = () => {
         let path = '/notnetflix/profile';
-        navigate(path)
+        navigate(path);
     }
 
     return(
-        <div className="login_page">
+        <div className="Login_Page">
+            <div className="Background_Overlay"/>
+            <img className="Background" src={Background} />
 
-            <h1 id="website_title">Not Netflix</h1>
+            <div className="Login_Page_Content">
+                <div className="Title">
+                    <h1 id="Not">Not</h1>
+                    <h1 id="Netflix">Netflix</h1>
+                </div>
 
-            {/* Container for the user info */}
-            <div className="info_box">
-
-                {/* Display Not Netflix Logo */}
-                <img className="login_logo" src= {logo} alt="Not-Netflix Logo" />
-                {/* Create button to enter */}
-                <button id="explore_button" onClick={logging_in}>EXPLORE</button>
-
+                <div className="Info_Box">
+                    <img className="Login_Logo" src= {NN_Logo} alt="Not-Netflix Logo" />
+                    <button onClick={LoggingIn}> EXPLORE </button>
+                </div>
             </div>
         </div>
     )

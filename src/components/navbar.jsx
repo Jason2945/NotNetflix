@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { ImageContext } from './imageContext';
+import Cat_Pic from '../assets/imgs/cat.jpg';
+import Dog_Pic from '../assets/imgs/dog.jpg';
+
 import logo from "../assets/imgs/NN_Logo.png"
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const options = {
@@ -12,27 +15,36 @@ const options = {
     }
 };
 
-
-function Navbar(){
+export default function Navbar(){
 
     const [query, setQuery] = useState([]);
     const [searchMovie, setSearchMovie] = useState([]);
     const [selectedMovieGenre, setSelectedMovieGenre] = useState('');
+    const [profileDropdown, setProfileDropdown] = useState(false);
+    const { imageData } = useContext(ImageContext);
 
     let navigate = useNavigate();
     // Allows the navigation to the trailer page
-    const to_trailer = (data, type) => {
+    const toTrailer = (data, type) => {
         let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
         setQuery('');
-        window.location.reload();
+    }
+
+    const loggingOut = () => {
+        let path = '/notnetflix';
+        navigate(path);
+    }
+
+    const changeProfile = () => {
+        let path = '/notnetflix/profile';
+        navigate(path);
     }
 
     // Allows the navigation to the movies genre page
-    const to_genres = (data, type, category) => {
-        let path = `/notnetflix/movies/${encodeURIComponent(category)}`;
+    const toGenres = (data, type, category) => {
+        let path = `/notnetflix/movie_genre/${encodeURIComponent(category)}`;
         navigate(path,{state:{id:data,type:type,category:category}});
-        window.location.reload();
     }
 
     // Check the search bar to see if the user has any inputs
@@ -50,10 +62,15 @@ function Navbar(){
         }
     }
 
+    // Allow toggle dropdown for profile setting
+    const profileToggleDropdown = () => {
+        setProfileDropdown(!profileDropdown);
+    }
+
     // Allows the user to search the closest match once there is a result shown
     const searchResult = (e) => {
         if (e.key === 'Enter' && searchMovie.length > 0){
-            to_trailer(searchMovie[0].id, 'movie');
+            toTrailer(searchMovie[0].id, 'movie');
         }
     }
 
@@ -71,69 +88,67 @@ function Navbar(){
     useEffect(() => {
         switch(selectedMovieGenre){
             case 'action':
-                to_genres(28, 'movie', 'Action');
+                toGenres(28, 'movie', 'Action');
                 break;
             case 'adventure':
-                to_genres(12, 'movie', 'Adventure');
+                toGenres(12, 'movie', 'Adventure');
                 break;
             case 'animation':
-                to_genres(16, 'movie', 'Animation');
+                toGenres(16, 'movie', 'Animation');
                 break;
             case 'comedy':
-                to_genres(35, 'movie', 'Comedy');
+                toGenres(35, 'movie', 'Comedy');
                 break;
             case 'crime':
-                to_genres(80, 'movie', 'Crime');
+                toGenres(80, 'movie', 'Crime');
                 break;
             case 'documentary':
-                to_genres(99, 'movie', 'Documentary');
+                toGenres(99, 'movie', 'Documentary');
                 break;
             case 'drama':
-                to_genres(18, 'movie', 'Drama');
+                toGenres(18, 'movie', 'Drama');
                 break;
             case 'family':
-                to_genres(10751, 'movie', 'Family');
+                toGenres(10751, 'movie', 'Family');
                 break;
             case 'fantasy':
-                to_genres(14, 'movie', 'Fantasy');
+                toGenres(14, 'movie', 'Fantasy');
                 break;
             case 'history':
-                to_genres(36, 'movie', 'History');
+                toGenres(36, 'movie', 'History');
                 break;
             case 'horror':
-                to_genres(27, 'movie', 'Horror');
+                toGenres(27, 'movie', 'Horror');
                 break;
             case 'music':
-                to_genres(10402, 'movie', 'Music');
+                toGenres(10402, 'movie', 'Music');
                 break;
             case 'mystery':
-                to_genres(9648, 'movie', 'Mystery');
+                toGenres(9648, 'movie', 'Mystery');
                 break;
             case 'romance':
-                to_genres(10749, 'movie', 'Romance');
+                toGenres(10749, 'movie', 'Romance');
                 break;
             case 'scifi':
-                to_genres(878, 'movie', 'Science Fiction');
+                toGenres(878, 'movie', 'Science Fiction');
                 break;
             case 'thriller':
-                to_genres(53, 'movie', 'Thriller');
+                toGenres(53, 'movie', 'Thriller');
                 break;
             case 'war':
-                to_genres(10752, 'movie', 'War');
+                toGenres(10752, 'movie', 'War');
                 break;
             case 'western':
-                to_genres(37, 'movie', 'Western');
+                toGenres(37, 'movie', 'Western');
                 break;
         }
     },[selectedMovieGenre])
 
     return(
-        <>
-        {/*This is the Navigation Bar*/}
         <div className="NavBar">
             <div className="NavBarLeft">
                 <img className="NavBar_Logo" src= {logo} alt="Not-Netflix Logo" />
-                <div className="NavLinks">
+                <div className="NavBar_Links">
                     <Link to={'/notnetflix/landing'}>
                         <button> Home</button>
                     </Link>
@@ -164,21 +179,33 @@ function Navbar(){
             </div>
             
             <div className="NavBarRight">
-                <input
-                    type='text'
-                    placeholder='Search Movies!'
-                    value={query}
-                    onChange={checkInput}
-                    onKeyDown={searchResult}
-                />
-                <div className="dropdown">
-                    {searchMovie.length > 0 && (
-                        <button onClick={() => to_trailer(searchMovie[0].id, 'movie')}>{searchMovie[0].title}</button>
+                <div className="Search_Movies">
+                    <input
+                        type='text'
+                        placeholder='Search Movies!'
+                        value={query}
+                        onChange={checkInput}
+                        onKeyDown={searchResult}
+                    />
+                    <div className="dropdown">
+                        {searchMovie.length > 0 && (
+                            <button onClick={() => toTrailer(searchMovie[0].id, 'movie')}>{searchMovie[0].title}</button>
+                        )}
+                    </div>
+                </div>
+                <div className="ProfilePic">
+                    {imageData && imageData==='cat' && <img onClick={profileToggleDropdown} src={Cat_Pic} />}
+                    {imageData && imageData==='dog' && <img onClick={profileToggleDropdown} src={Dog_Pic} />}
+                    {profileDropdown && (
+                        <div className="Profile_Dropdown">
+                            <ul>
+                                <button onClick={changeProfile}>Profile </button>
+                                <button onClick={loggingOut}> Logout </button>
+                            </ul>
+                        </div>
                     )}
                 </div>
             </div>
         </div>
-        </>
     )
 }
-export default Navbar;

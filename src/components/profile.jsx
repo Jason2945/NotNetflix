@@ -1,20 +1,28 @@
-import cat_pic from "../assets/imgs/cat.jpg"
-import dog_pic from "../assets/imgs/dog.jpg"
-import { useNavigate } from "react-router-dom"
+import Cat_Pic from "../assets/imgs/cat.jpg";
+import Dog_Pic from "../assets/imgs/dog.jpg";
+import Background from "../assets/imgs/Background.jpg";
+import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { ImageContext } from "./imageContext";
 
 export default function Profile(){
 
-let navigate = useNavigate();
-const to_landing_page = () => {
-    let path = '/notnetflix/landing';
-    navigate(path)
-}
+    const { setImageData } = useContext(ImageContext);
+
+    let navigate = useNavigate();
+    const To_Landing_Page = (image) => {
+        let path = '/notnetflix/landing';
+        setImageData(image)
+        navigate(path)
+    }
 
     return(
-        <div className="profile_page">
-            <div className="profile_box">
-                <img onClick={to_landing_page} src={cat_pic}/>
-                <img onClick={to_landing_page} src={dog_pic}/>
+        <div className="Profile_Page">
+            <div className="Background_Overlay"/>
+            <img className="Background" src={Background} />
+            <div className="Profile_Content">
+                <img onClick={() => To_Landing_Page('cat')} src={Cat_Pic}/>
+                <img onClick={() => To_Landing_Page('dog')} src={Dog_Pic}/>
             </div>
         </div>
     )

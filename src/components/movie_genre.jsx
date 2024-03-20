@@ -1,5 +1,6 @@
 import { useState, useEffect, React } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "./navbar";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const options = {
@@ -10,7 +11,7 @@ const options = {
     }
 };
 
-export default function Movies(){
+export default function MovieByGenres(){
 
     const location = useLocation();
     // location.state.type is movie or tv
@@ -18,7 +19,7 @@ export default function Movies(){
 
     let navigate = useNavigate();
 
-    const to_trailer = (data, type) => {
+    const toTrailer = (data, type) => {
         let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
@@ -27,7 +28,7 @@ export default function Movies(){
     // Runs this use effect to get the movies based off genre
     useEffect(() => {
         const fetchData = async() => {
-            //  This gets the info of the movie
+            //  This gets the info of the movie for the first 100
             const Response = await fetch(`https://api.themoviedb.org/3/discover/${location.state.type}?language=en-US&with_genres=${location.state.id}`, options);
             const Data = await Response.json();
 
@@ -47,15 +48,16 @@ export default function Movies(){
             setFetchGenresMovies(combinedDatas)
         }
         fetchData()
-    }, [])
+    }, [location.state])
 
     return (
-        <div className="movies_container">
+        <div className="MovieByGenre">
+            <Navbar/>
             <h1>Top 100 {location.state.category} Movies</h1>
-            <div className="movies_by_genres_container">
+            <div className="MovieByGenreContainer">
             {fetchGenreMovies.map((movie, index) => (
-                <div className="movie_item" key={index}>
-                    <img className="movies_by_genres" onClick={() => to_trailer(movie.id, 'movie')} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} />
+                <div className="MovieItem" key={index}>
+                    <img className="MovieByGenreImges" onClick={() => toTrailer(movie.id, 'movie')} src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} />
                 </div>
             ))}
             </div>

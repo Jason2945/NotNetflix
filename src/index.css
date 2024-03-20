@@ -1,352 +1,400 @@
-/* Allow the pages to fill the whole site, allow scrolling on the y */
-root, html, body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
+@keyframes pulse {
+  0%, 100%{
+      color: red;
+      transform: scale(1);
+  }
+  50%{
+      color: white;
+      transform: scale(.9);
+  }
 }
 
-/* Hides the scroll bar, but still allow it to function */
-body::-webkit-scrollbar {
-    display: none; /* WebKit (Safari, Chrome, etc.) */
-    width: 0; /* Firefox */
+@keyframes changeWhite {
+  0%, 100%{
+      color: red;
+  }
+  50%{
+      color: white;
+  }
 }
 
-/**********************************************************************************/
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+@keyframes changeRed {
+  0%, 100%{
+      color: white;
+  }
+  50%{
+      color: red;
+  }
 }
 
-@keyframes increaseSize {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.5);
-    } 
+*{
+  margin: 0;
+  padding: 0;
 }
 
-@keyframes blinking {
-    0%, 100% {
-        color: black;
-    }
-    50% {
-        color: red;
-    }
+body, html {
+  width: 100%;
+  height: 100%;
 }
 
-/**********************************************************************************/
-/* Login page css */
-.login_page::before{
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url("./assets/imgs/movie_background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: .5;
-    z-index: -1;
+::-webkit-scrollbar {
+  display: none;
 }
 
-.login_page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.5em;
-    height: 100vh;
-    width: 100vw;
+/* Background_Overlay */
+.Background_Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* This puts a dark opacity over the background of 0.3 */
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-#website_title {
-    color: red;
-    font-size: 5em;
-    background-color: transparent;
-    user-select: none;
-    animation: fadeIn 3s, increaseSize 3s, blinking 5s infinite;
+.Background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/*****************************CSS For the Login Page************************************/
+.Login_Page{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.info_box {
-    background-color: black;
-    width: 20vw;
-    height: 50vh;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.Login_Page_Content{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
 }
 
-.login_logo{
-    width: 7vw;
-    height: auto;
-    user-select: none;
-    padding-bottom: 20%;
+.Title {
+  display: flex;
+  font-size: 6em;
+  color: white;
+  user-select: none;
+  margin-bottom: 3%;
 }
 
-#explore_button {
-    user-select: none;
-    width: auto;
-    height: 10%;
-    font-size: 1em;
-    color: white;
-    background-color: red;
-    font-weight: bold;
+#Not {
+  animation: changeWhite 3s infinite;
 }
 
-#explore_button:hover{
-    color: red;
-    background-color: white;
+#Netflix {
+  margin-left: 3%;
+  animation: changeRed 3s infinite;
 }
 
-/**********************************************************************************/
-/* Profile page css */
 
-/* This allows the setup of the page before the rendering and allows animation after rendering */
-/* Mainly used to set background to .5 opacity nad z-index of -1 */
-.profile_page::before{
-    content: '';
-    display: flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url("./assets/imgs/movie_background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: .5;
-    z-index: -1;
+.Info_Box{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  width: 20%;
+  height: 50%;
 }
 
-.profile_page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+.Login_Logo{
+  width: 50%;
+  height: auto;
+  align-self: center;
+  margin-top: 15%;
 }
 
-.profile_box {
-    display: flex;
-    justify-content: space-evenly;
-    width: 50%;
+.Info_Box button{
+  align-self: center;
+  width: 40%;
+  height: 7%;
+  margin-top: 10%;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  animation: pulse 1s infinite;
+  border-color: red;
+  background-color: black;
+}
+/************************CSS For the Profile Page ***********************************************/
+.Profile_Page{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.profile_box img{
-    width: 30%;
-    border: black solid;
-    transform: scale(1);
-    transition: transform 1s ease;
+.Profile_Content{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-/* Add animations to imgs when hovered */
-.profile_box img:hover{
-    transform: scale(1.3);
-    transition: transform 1s ease;
-}
-/**********************************************************************************/
-/* Navbar css */
-.NavBar {
-    display: flex;
-    position: fixed;
-    z-index: 1;
-    height: 7vh;
-    width: 100vw;
-    align-items: center;
-    background-color: black;
-    justify-content: space-between;
+.Profile_Content img{
+  width: 15vw;
+  height: auto;
+  transition: transform 1s ease;
 }
 
-.NavBar button {
-    border: none;
-    background: transparent;
-    font-size: 1.5rem;
-    color: white;
+.Profile_Content img:hover{
+  transform: scale(1.3);
+  transition: transform 1s ease;
+}
+/*******************CSS For the NavBar **************************************************/
+
+.NavBar{
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 5%;
+  background-color: black;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
 }
 
-.NavBar button:hover{
-    color: red;
-    cursor: pointer;
+.NavBarLeft{
+  display: flex;
+  height: 100%;
+  width: 30%;
+  align-items: center;
+  margin-left: 1%;
 }
 
-.NavBarLeft {
-    display: flex;
-    height: 100%;
-    width: 40vw;
-    align-items: center;
+.NavBarLeft img{
+  height: 100%;
+  width: auto;
+  margin-right: 3%;
 }
 
-.NavBar_Logo {
-    height: 100%;
-    padding-left: 2em;
-    padding-right: 2rem;
-} 
-
-.NavLinks {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 100%;
-    width: 20vw;
+.NavBar_Links{
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  height: auto;
 }
 
-.NavLinks select{
-    text-indent: 1px;
-    text-overflow: '';
-    width: 7vw;
-    background: black;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
+.NavBar_Links button {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.NavBar_Links button:hover{
+  color: red;
+  cursor: pointer;
+}
+
+.NavBar_Links select{
+  text-indent: 1px;
+  text-overflow: '';
+  width: 7vw;
+  background: black;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.NavBar_Links select:hover{
+  color: red;
+  cursor: pointer;
 }
 
 .NavBarRight {
-    padding-right: 10vw;
+  display: flex;
+  margin: 1%;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.NavBarRight input{
-    width: 10vw;
+.Search_Movies{
+  position: relative;
+}
+
+.Search_Movies input{
+  text-align: center;
 }
 
 .dropdown {
-    display: none;
-    position: absolute;
-    height: 2vh;
-    width: 10vw;
-    background-color: white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  max-height: 200px;
 }
 
 .dropdown button {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-size: 12px;
-    color: black;
-    overflow: hidden;
-    white-space: nowrap;
-    text-align: center;
+  height: 100%;
+  width: 100%;
+  font-size: 15px;
+  color: white;
+  background-color: red;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-/**********************************************************************************/
-/* landing page css */
-.shows_container {
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    width: 100%;
-    height: 100%;
-    padding-top: 7vh;
-    font-size: 2em;
-    color: white;
-    user-select: none;
+.ProfilePic{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: auto;
+  align-items: center;
+  margin-left: 5%;
+  margin-right: 3%;
+  position: relative;
 }
 
-.shows_container h3{
-    padding-left: 1vw;
-    margin: 2%;
+.ProfilePic img{
+  height: 90%;
+  cursor: pointer;
+  margin-top: 10%;
 }
 
-.movie_container {
-    display: flex;
-    align-items: center;
-    height: 33vh;
-    overflow:hidden;
-    scroll-behavior: smooth;
+.Profile_Dropdown {
+  position: absolute;
+  background-color: black;
+  top: 150%;
+  left: 0;
+  z-index: 1;
 }
 
-.shows_container img{
-    margin-right: 3%;
-    height: 100%;
-    width: auto;
+.Profile_Dropdown button{
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  background-color: transparent;
+  margin-bottom: 10px;
 }
 
-.movie_container img:hover{
-    border: blue solid 10px;
-    z-index: 1;
-    cursor:pointer;
+.Profile_Dropdown button:hover{
+  cursor: pointer;
+  color: red;
 }
 
-.footer{
-    padding: 1%;
-}
-/**********************************************************************************/
-/* trailer page css */
-.trailer_page {
-    display: flex;
-    overflow: hidden;
-    padding-top: 7vh;
+/************************ CSS For the Landing Page **********************************/
+.Shows{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  width: 100%;
+  height: 100%;
 }
 
-.Movie_Card {
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    height: 93vh;
-    width: 45vw;
-    color: white;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
+.MovieList{
+  margin-top: 3%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
 }
 
-#overview {
-    width: 70%;
-    text-align: center;
-    font-size: 1.25rem;
+.MovieList h3{
+  color: wheat;
+  font-size: 3em;
+  margin: 1%;
+  user-select: none;
 }
 
-.Movie_Card img{
-    max-width: auto;
-    max-height: 50%;
+.MovieContainer{
+  display: flex;
+  align-items: center;
+  height: 40vh;
+  width: auto;
+  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
-/**********************************************************************************/
-/* movie page css */
-
-.movies_container{
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    align-items: center;
+.MovieContainer img{
+  height: 90%;
+  margin: 3%;
 }
 
-.movies_container h1{
-    color: red;
-    background-color: black;
-    padding-top: 10vh;
-    font-size: 5rem;
-    user-select: none;
+.MovieContainer img:hover{
+  border: red solid 10px;
+  cursor: pointer;
 }
 
-.movies_by_genres_container{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: black;
+/************************************ CSS For Trailer Page ***************************************/
+.Trailer{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: black;
 }
 
-.movie_item {
-    width: 15%;
-    margin: 5vh;
+.TrailerContent{
+  display: flex;
+  width: 100vw;
+  margin-top: 3%;
+  height: 97%;
 }
 
-.movies_by_genres{
-    width: 75%;
-    cursor: pointer;
-    transition: transform 0.3s;
+.MovieCard {
+  display: flex;
+  flex-direction: column;
+  color: wheat;
+  height: 95%;
+  width: 40%;
+  align-items: center;
+  text-align: center;
+  justify-content: space-evenly;
+  padding-left: 1%;
+  padding-right: 1%;
 }
 
-.movies_by_genres:hover{
-    transform: scale(1.3);
+.MovieCard img{
+  width: auto;
+  max-height: 50%;
+}
+
+/********************************* CSS For movie_genre page **************************************/
+.MovieByGenre{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  align-items: center;
+  width: 100vw;
+  align-items: center;
+}
+
+.MovieByGenre h1{
+  color: red;
+  margin-top: 5%;
+  font-size: 5em;
+  user-select: none;
+}
+
+.MovieByGenreContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.MovieItem{
+  width: 15%;
+  margin: 3%;
+  align-items: center;
+}
+
+.MovieByGenreImges{
+  width: 75%;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.MovieByGenreImges:hover{
+  transform: scale(1.3);
 }
