@@ -159,8 +159,8 @@ export default function Navbar(){
                         <option value="adventure">Adventure </option>
                         <option value="animation">Animation </option>
                         <option value="comedy">Comedy </option>
-                        <option value="action">Crime </option>
-                        <option value="action">Documentary </option>
+                        <option value="crime">Crime </option>
+                        <option value="documentary">Documentary </option>
                         <option value="drama">Drama </option>
                         <option value="family">Family </option>
                         <option value="fantasy">Fantasy </option>
