@@ -149,7 +149,7 @@ export default function Navbar(){
             <div className="NavBarLeft">
                 <img className="NavBar_Logo" src= {logo} alt="Not-Netflix Logo" />
                 <div className="NavBar_Links">
-                    <Link to={'/notnetflix/landing'}>
+                    <Link to={'/NotNetflix/landing'}>
                         <button> Home</button>
                     </Link>
 

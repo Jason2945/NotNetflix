@@ -21,7 +21,7 @@ export default function Landing(){
     // Allows the navigation to the trailer page
     let navigate = useNavigate();
     const toTrailer = (data, type) => {
-        let path = `/notnetflix/trailer/${encodeURIComponent(data)}`;
+        let path = `/NotNetflix/trailer/${encodeURIComponent(data)}`;
         navigate(path,{state:{id:data,type:type}})
     }
 
