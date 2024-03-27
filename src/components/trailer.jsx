@@ -1,9 +1,12 @@
-import { useState, useEffect, React } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ReactPlayer from 'react-player';
 import Navbar from "./navbar";
+import Heart from "../assets/imgs/heart.svg"
+import Eyes from "../assets/imgs/eyes.svg"
 
 const apiKey = import.meta.env.VITE_API_KEY;
+const account_id = import.meta.env.VITE_MOVIE_ACC_ID;
 const options = {
     method: 'GET',
     headers: {
@@ -66,6 +69,42 @@ export default function Trailer(){
     )
 }
 
+// This adds movie to the watch list
+const addWatchedMovie = async (movieInfo) => {
+    const option2 = {
+        method: 'POST',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({media_type: 'movie', media_id: movieInfo.id, watchlist: true})
+    };
+
+    fetch(`https://api.themoviedb.org/3/account/${account_id}/watchlist`, option2)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+};
+
+// This adds movie to the favorites
+const addFavoriteMove = async (movieInfo) => {
+    const option3 = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({media_type: 'movie', media_id: movieInfo.id, favorite: true})
+      };
+      
+      fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite`, option3)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+}
+
 //  This movie card displays the movie name, image, overview, release date, and the genres
 const MovieInfo = ({movieInfo}) => {
     return (
@@ -75,6 +114,14 @@ const MovieInfo = ({movieInfo}) => {
             <p id="overview">{movieInfo.overview}</p>
             <p>Release Date: {movieInfo.release_date}</p>
             <p>Genres: {movieInfo.genres && movieInfo.genres.map(genre => genre.name).join(', ')}</p>
+            <div className="LikedOrWatched">
+                <button onClick={() => {addWatchedMovie(movieInfo)}}>
+                    <img src={Eyes}/>
+                </button>
+                <button onClick={() => {addFavoriteMove(movieInfo)}}>
+                    <img src={Heart}/>
+                </button>
+            </div>
         </div>
     )
 }

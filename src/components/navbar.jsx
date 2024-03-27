@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from 'react';
 import { ImageContext } from './imageContext';
 import Cat_Pic from '../assets/imgs/cat.jpg';
 import Dog_Pic from '../assets/imgs/dog.jpg';
-
 import logo from "../assets/imgs/NN_Logo.png"
 
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -19,6 +18,7 @@ export default function Navbar(){
 
     const [query, setQuery] = useState([]);
     const [searchMovie, setSearchMovie] = useState([]);
+    const [allGenres, setAllGenres] = useState([]);
     const [selectedMovieGenre, setSelectedMovieGenre] = useState('');
     const [profileDropdown, setProfileDropdown] = useState(false);
     const { imageData } = useContext(ImageContext);
@@ -85,63 +85,23 @@ export default function Navbar(){
         findMovies();
     }, [query])
 
+    // Get all the movie genres from TMDB
     useEffect(() => {
-        switch(selectedMovieGenre){
-            case 'action':
-                toGenres(28, 'movie', 'Action');
-                break;
-            case 'adventure':
-                toGenres(12, 'movie', 'Adventure');
-                break;
-            case 'animation':
-                toGenres(16, 'movie', 'Animation');
-                break;
-            case 'comedy':
-                toGenres(35, 'movie', 'Comedy');
-                break;
-            case 'crime':
-                toGenres(80, 'movie', 'Crime');
-                break;
-            case 'documentary':
-                toGenres(99, 'movie', 'Documentary');
-                break;
-            case 'drama':
-                toGenres(18, 'movie', 'Drama');
-                break;
-            case 'family':
-                toGenres(10751, 'movie', 'Family');
-                break;
-            case 'fantasy':
-                toGenres(14, 'movie', 'Fantasy');
-                break;
-            case 'history':
-                toGenres(36, 'movie', 'History');
-                break;
-            case 'horror':
-                toGenres(27, 'movie', 'Horror');
-                break;
-            case 'music':
-                toGenres(10402, 'movie', 'Music');
-                break;
-            case 'mystery':
-                toGenres(9648, 'movie', 'Mystery');
-                break;
-            case 'romance':
-                toGenres(10749, 'movie', 'Romance');
-                break;
-            case 'scifi':
-                toGenres(878, 'movie', 'Science Fiction');
-                break;
-            case 'thriller':
-                toGenres(53, 'movie', 'Thriller');
-                break;
-            case 'war':
-                toGenres(10752, 'movie', 'War');
-                break;
-            case 'western':
-                toGenres(37, 'movie', 'Western');
-                break;
+        const getAllGenres = async () => {
+            const response = await fetch('https://api.themoviedb.org/3/genre/movie/list', options);
+            const data = await response.json();
+            setAllGenres(data.genres)
         }
+        getAllGenres();
+    }, [])
+
+    // Goto the genres page when a genre is selected from the movie list
+    useEffect(() => {
+        allGenres.find(genre =>{
+            if (genre.name === selectedMovieGenre){
+                toGenres(genre.id, 'movie', genre.name);
+            }
+        });
     },[selectedMovieGenre])
 
     return(
@@ -155,25 +115,14 @@ export default function Navbar(){
 
                     <select value={selectedMovieGenre} onChange={(e) => setSelectedMovieGenre(e.target.value)}>
                         <option value="">Movies</option>
-                        <option value="action">Action </option>
-                        <option value="adventure">Adventure </option>
-                        <option value="animation">Animation </option>
-                        <option value="comedy">Comedy </option>
-                        <option value="crime">Crime </option>
-                        <option value="documentary">Documentary </option>
-                        <option value="drama">Drama </option>
-                        <option value="family">Family </option>
-                        <option value="fantasy">Fantasy </option>
-                        <option value="history">History </option>
-                        <option value="horror">Horror </option>
-                        <option value="music">Music </option>
-                        <option value="mystery">Mystery </option>
-                        <option value="romance">Romance </option>
-                        <option value="scifi">Science Fiction </option>
-                        <option value="thriller">Thriller </option>
-                        <option value="war">War </option>
-                        <option value="western">Western </option>
+                        {allGenres.map(genre => (
+                            <option key={genre.id} value={genre.name}>{genre.name} </option>
+                        ))}
                     </select>
+
+                    <Link to={'/NotNetflix/favorites'}>
+                        <button> Favorites</button>
+                    </Link>
 
                 </div>
             </div>

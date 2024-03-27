@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './navbar';
+import fs from 'fs';
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const options = {
